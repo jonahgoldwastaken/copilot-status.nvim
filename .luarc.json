@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.workspace.library": [
+        "/Users/jonahmeijers/.local/share/nvim/lazy/neodev.nvim/types/nightly",
+        "/usr/local/Cellar/neovim/HEAD-99cf111/share/nvim/runtime",
+        "/Users/jonahmeijers/.local/share/nvim/lazy/lualine.nvim",
+        "${3rd}/luassert/library"
+    ]
+}

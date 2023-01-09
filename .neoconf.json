@@ -1,0 +1,9 @@
+{
+  "neodev": {
+		"library": {
+			"enabled": true,
+			"types": true,
+			"plugins": ["copilot.lua"]
+		}
+	}
+}
