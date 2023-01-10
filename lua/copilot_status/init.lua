@@ -53,6 +53,7 @@ function M.status()
 end
 
 function M.status_string()
+	if not M.__has_setup_run then M.setup() end
 	local status = M.status()
 	local message = status.message
 	local icon = util.status_to_icon(status.status)
