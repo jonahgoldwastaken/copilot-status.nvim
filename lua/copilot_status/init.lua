@@ -1,5 +1,6 @@
 local Status = require "copilot_status.status"
 local config = require "copilot_status.config"
+local util = require "copilot_status.util"
 
 local M = {
 	__has_setup_run = false,
@@ -49,6 +50,14 @@ function M.status()
 	local status = buf_status_map[bufnr]
 	if not status then return { status = "offline", message = nil } end
 	return { status = status.status, message = status.message }
+end
+
+function M.status_string()
+	local status = M.status()
+	local message = status.message
+	local icon = util.status_to_icon(status.status)
+	if message then return icon .. " " .. message end
+	return "" .. icon
 end
 
 return M
