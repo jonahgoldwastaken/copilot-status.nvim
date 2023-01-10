@@ -1,5 +1,6 @@
 local cp_api = require "copilot.api"
 local cp_util = require "copilot.util"
+local config = require "copilot_status.config"
 
 ---@alias copilot_status.state "loading" | "idle" | "error" | "offline" | "warning"
 
@@ -63,6 +64,8 @@ function Status:handle_status_notification()
 			self.status = "loading"
 		elseif data.status == "warning" then
 			self.status = "warning"
+		elseif config.config.debug then
+			vim.notify("Unhandled status notification: " .. data.status, vim.log.levels.DEBUG)
 		end
 	end
 end

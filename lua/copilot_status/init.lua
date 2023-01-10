@@ -1,4 +1,5 @@
 local Status = require "copilot_status.status"
+local config = require "copilot_status.config"
 
 local M = {
 	__has_setup_run = false,
@@ -21,12 +22,15 @@ local function on_buf_leave(event)
 	buf_status_map[bufnr] = nil
 end
 
-function M.setup()
+---@parm cfg copilot_status.config|nil
+function M.setup(cfg)
 	local cp_ok = pcall(require, "copilot")
 	if not cp_ok then
 		vim.notify("copilot.lua not found while running setup", vim.log.levels.ERROR)
 		return
 	end
+
+	config.setup(cfg)
 
 	vim.api.nvim_create_autocmd("BufEnter", {
 		callback = on_buf_enter,
