@@ -1,9 +1,25 @@
+local Status = require "copilot_status.status"
+
 local M = {
 	__has_setup_run = false,
 }
 
----@param data {status: string, message: string}
-local function on_status_update(data) vim.pretty_print(data) end
+---@type table<number, copilot_status.status>
+local buf_status_map = {}
+
+local function on_buf_enter(event)
+	local cp_util = require "copilot.util"
+	local bufnr = event.buf
+	if buf_status_map[bufnr] then return end
+	local client = cp_util.get_copilot_client()
+	local status = Status:new(client)
+	buf_status_map[bufnr] = status
+end
+
+local function on_buf_leave(event)
+	local bufnr = event.buf
+	buf_status_map[bufnr] = nil
+end
 
 function M.setup()
 	local cp_ok = pcall(require, "copilot")
@@ -11,10 +27,24 @@ function M.setup()
 		vim.notify("copilot.lua not found while running setup", vim.log.levels.ERROR)
 		return
 	end
-	local cp_api = require "copilot.api"
-	cp_api.register_status_notification_handler(on_status_update)
+
+	vim.api.nvim_create_autocmd("BufEnter", {
+		callback = on_buf_enter,
+	})
+
+	vim.api.nvim_create_autocmd("BufDelete", {
+		callback = on_buf_leave,
+	})
 
 	M.__has_setup_run = true
+end
+
+function M.status()
+	if not M.__has_setup_run then M.setup() end
+	local bufnr = vim.api.nvim_get_current_buf()
+	local status = buf_status_map[bufnr]
+	if not status then return { status = "offline", message = nil } end
+	return { status = status.status, message = status.message }
 end
 
 return M
