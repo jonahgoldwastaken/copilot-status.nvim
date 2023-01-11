@@ -2,7 +2,7 @@
 
 A [copilot.lua][copilot] status indicator for Neovim.
 
-## Demo
+## Demo (status is shown in bottom-right corner)
 
 https://user-images.githubusercontent.com/23699599/211830740-1c6a07dd-bdf5-43f0-a35d-60e3c4584d44.mp4
 
