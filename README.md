@@ -2,6 +2,12 @@
 
 A [copilot.lua][copilot] status indicator for Neovim.
 
+## Demo
+
+https://user-images.githubusercontent.com/23699599/211830740-1c6a07dd-bdf5-43f0-a35d-60e3c4584d44.mp4
+
+Using [Nonicons][nonicons] for the Copilot symbols and my unreleased Octocolors theme (coming soon...).
+
 ## Requirements
 
 - Neovim 0.8+
