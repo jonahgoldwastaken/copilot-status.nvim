@@ -64,7 +64,7 @@ You can get these values with `.status()` and manipulate them yourself, or use t
 require('lualine').setup {
 	sections = {
 		lualine_x = {
-			require('copilot-status').status_string,
+			require('copilot_status').status_string,
 		}
 	}
 }
@@ -75,7 +75,7 @@ require('lualine').setup {
 `copilot-status` has little settings to adjust at the moment. Here are the defaults:
 
 ```lua
-require('copilot-status').setup({
+require('copilot_status').setup({
 	icons = {
 		idle = " ",
 		error = " ",
