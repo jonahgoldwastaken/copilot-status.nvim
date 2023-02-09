@@ -10,10 +10,10 @@ local M = {
 local buf_status_map = {}
 
 local function on_buf_enter(event)
-	local cp_util = require "copilot.util"
+	local cp_client = require "copilot.client"
 	local bufnr = event.buf
 	if buf_status_map[bufnr] then return end
-	local client = cp_util.get_copilot_client()
+	local client = cp_client.get()
 	local status = Status:new(client)
 	buf_status_map[bufnr] = status
 end
@@ -57,7 +57,7 @@ function M.status_string()
 	local status = M.status()
 	local message = status.message
 	local icon = util.status_to_icon(status.status)
-	if message then return icon .. " " .. message end
+	if message ~= nil then return icon .. " " .. message end
 	return "" .. icon
 end
 

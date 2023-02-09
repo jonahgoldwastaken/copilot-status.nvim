@@ -1,5 +1,5 @@
 local cp_api = require "copilot.api"
-local cp_util = require "copilot.util"
+local cp_client = require "copilot.client"
 local config = require "copilot_status.config"
 
 ---@alias copilot_status.state "loading" | "idle" | "error" | "offline" | "warning"
@@ -12,7 +12,7 @@ local Status = {}
 
 function Status:check_status()
 	if not self.client then
-		local client = cp_util.get_copilot_client()
+		local client = cp_client.get()
 		if not client then
 			self.status = "offline"
 			return
@@ -40,7 +40,7 @@ function Status:check_status()
 			return
 		end
 
-		local attached = cp_util.is_attached(self.client)
+		local attached = cp_client.buf_is_attached(0)
 		if not attached then
 			self.status = "offline"
 			return
