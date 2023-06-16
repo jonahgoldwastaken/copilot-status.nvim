@@ -87,7 +87,7 @@ require('copilot_status').setup({
 })
 ```
 
-> Make sure ` .setup()`` is run before  `.string()`or`.status_string()`, otherwise the plugin will just ignore your configuration.
+> Make sure `.setup()` is run before `.string()` or `.status_string()`, otherwise the plugin will just ignore your configuration.
 
 ## Acknowledgements
 
