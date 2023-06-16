@@ -10,10 +10,12 @@ local M = {
 local buf_status_map = {}
 
 local function on_buf_enter(event)
-  local cp_client = require "copilot.client"
   local bufnr = event.buf
   if buf_status_map[bufnr] then return end
-  local client = cp_client.get()
+
+  local client = nil
+  local cp_client_ok, cp_client = pcall(require, "copilot.client")
+  if cp_client_ok then client = cp_client.get() end
   local status = Status:new(client)
   buf_status_map[bufnr] = status
 end

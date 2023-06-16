@@ -1,5 +1,3 @@
-local cp_api = require "copilot.api"
-local cp_client = require "copilot.client"
 local config = require "copilot_status.config"
 
 ---@alias copilot_status.state "loading" | "idle" | "error" | "offline" | "warning"
@@ -11,6 +9,14 @@ local config = require "copilot_status.config"
 local Status = {}
 
 function Status:check_status()
+  local cp_client_ok, cp_client = pcall(require, "copilot.client")
+  if not cp_client_ok then
+    self.status = "offline"
+    return
+  end
+
+  local cp_api = require "copilot.api"
+
   if not self.client then
     local client = cp_client.get()
     if not client then
@@ -81,23 +87,36 @@ function Status:new(client)
 
   local status_cb = o:handle_status_notification()
 
-  vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
+  local cp_api_ok = pcall(require, "copilot.api")
+  if not cp_api_ok then return o end
+
+  vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
     buffer = vim.api.nvim_get_current_buf(),
     callback = function()
-      o:check_status()
-      if o.client and not o.handler_registered then
+      if o.client ~= nil and not o.handler_registered then
+        local cp_api = require "copilot.api"
         cp_api.register_status_notification_handler(status_cb)
         o.handler_registered = true
+      elseif o.client == nil then
+        local cp_client_ok, cp_client = pcall(require, "copilot.client")
+        if not cp_client_ok then return end
+        o.client = cp_client.get()
       end
+      o:check_status()
     end,
   })
 
   vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" }, {
     buffer = vim.api.nvim_get_current_buf(),
     callback = function()
-      if o.client and o.handler_registered then
+      if o.client ~= nil and o.handler_registered then
+        local cp_api = require "copilot.api"
         cp_api.unregister_status_notification_handler(status_cb)
         o.handler_registered = false
+      elseif o.client == nil then
+        local cp_client_ok, cp_client = pcall(require, "copilot.client")
+        if not cp_client_ok then return end
+        o.client = cp_client.get()
       end
     end,
   })
