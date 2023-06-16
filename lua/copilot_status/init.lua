@@ -27,12 +27,6 @@ end
 
 ---@parm cfg copilot_status.config|nil
 function M.setup(cfg)
-  local cp_ok = pcall(require, "copilot")
-  if not cp_ok then
-    vim.notify("copilot.lua not found while running setup", vim.log.levels.ERROR)
-    return
-  end
-
   config.setup(cfg)
 
   vim.api.nvim_create_autocmd("BufEnter", {
