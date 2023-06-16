@@ -21,10 +21,10 @@ Using [Nonicons][nonicons] for the Copilot symbols and my unreleased Octocolors 
 
 ```lua
 {
-	"jonahgoldwastaken/copilot-status.nvim",
-	dependencies = { "copilot.lua" } -- or "zbirenbaum/copilot.lua"
-	lazy = true,
-	event = "BufReadPost",
+  "jonahgoldwastaken/copilot-status.nvim",
+  dependencies = { "copilot.lua" } -- or "zbirenbaum/copilot.lua"
+  lazy = true,
+  event = "BufReadPost",
 }
 ```
 
@@ -32,9 +32,9 @@ Using [Nonicons][nonicons] for the Copilot symbols and my unreleased Octocolors 
 
 ```lua
 use({
-	"jonahgoldwastaken/copilot-status.nvim",
-	after = { "zbirenbaum/copilot.lua" },
-	event = "BufReadPost",
+  "jonahgoldwastaken/copilot-status.nvim",
+  after = { "zbirenbaum/copilot.lua" },
+  event = "BufReadPost",
 })
 ```
 
@@ -62,11 +62,12 @@ You can get these values with `.status()` and manipulate them yourself, or use t
 
 ```lua
 require('lualine').setup {
-	sections = {
-		lualine_x = {
-			require('copilot_status').status_string,
-		}
-	}
+  sections = {
+    lualine_x = {
+      require("copilot_status").status_string,
+      cnd = function() return require("copilot_status").enabled() end,
+    }
+  }
 }
 ```
 
@@ -76,14 +77,14 @@ require('lualine').setup {
 
 ```lua
 require('copilot_status').setup({
-	icons = {
-		idle = " ",
-		error = " ",
-		offline = " ",
-		warning = "𥉉 ",
-		loading = " ",
-	},
-	debug = false,
+  icons = {
+    idle = " ",
+    error = " ",
+    offline = " ",
+    warning = "𥉉 ",
+    loading = " ",
+  },
+  debug = false,
 })
 ```
 
