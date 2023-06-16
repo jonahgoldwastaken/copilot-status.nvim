@@ -90,7 +90,7 @@ function Status:new(client)
   local cp_api_ok = pcall(require, "copilot.api")
   if not cp_api_ok then return o end
 
-  vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  vim.api.nvim_create_autocmd({ "BufWinEnter", "InsertEnter", "WinEnter" }, {
     buffer = vim.api.nvim_get_current_buf(),
     callback = function()
       if o.client ~= nil and not o.handler_registered then
