@@ -64,7 +64,7 @@ You can get these values with `.status()` and manipulate them yourself, or use t
 require('lualine').setup {
   sections = {
     lualine_x = {
-      function() require("copilot_status").status_string() end,
+      function() return require("copilot_status").status_string() end,
       cnd = function() return require("copilot_status").enabled() end,
     }
   }
