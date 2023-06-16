@@ -1,0 +1,21 @@
+name: "ci"
+
+on: [push]
+
+jobs:
+  docs:
+    runs-on: "ubuntu-latest"
+    name: Generate docs
+    steps:
+      - uses: actions/checkout@v2
+      - name: panvimdoc
+        uses: kdheepak/panvimdoc@main
+        with:
+          vimdoc: copilot-status.nvim
+          treesitter: true
+          version: "Neovim >= 0.8"
+          demojify: true
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Auto generate docs"
+          branch: ${{ github.head_ref }}
