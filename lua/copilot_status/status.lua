@@ -70,8 +70,10 @@ function Status:handle_status_notification()
       self.status = "loading"
     elseif data.status == "warning" then
       self.status = "warning"
+    elseif data.status == "" then
+      self.status = "offline"
     elseif config.config.debug then
-      vim.notify("Unhandled status notification: " .. data.status, vim.log.levels.DEBUG)
+      vim.notify("Unhandled status notification: " .. vim.inspect(data), vim.log.levels.DEBUG)
     end
   end
 end
