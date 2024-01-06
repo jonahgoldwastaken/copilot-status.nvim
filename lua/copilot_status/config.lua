@@ -3,10 +3,10 @@ local M = {}
 ---@class copilot_status.config
 local defaults = {
   icons = {
-    idle = " ",
-    error = " ",
-    offline = " ",
-    warning = "𥉉 ",
+    idle = " ",
+    error = " ",
+    offline = " ",
+    warning = " ",
     loading = " ",
   },
   debug = false,
