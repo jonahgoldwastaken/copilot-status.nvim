@@ -96,8 +96,8 @@ function Status:new(client)
     buffer = vim.api.nvim_get_current_buf(),
     callback = function()
       if o.client ~= nil and not o.handler_registered then
-        local cp_api = require "copilot.api"
-        cp_api.register_status_notification_handler(status_cb)
+        local cp_status = require "copilot.status"
+        cp_status.register_status_notification_handler(status_cb)
         o.handler_registered = true
       elseif o.client == nil then
         local cp_client_ok, cp_client = pcall(require, "copilot.client")
@@ -112,8 +112,8 @@ function Status:new(client)
     buffer = vim.api.nvim_get_current_buf(),
     callback = function()
       if o.client ~= nil and o.handler_registered then
-        local cp_api = require "copilot.api"
-        cp_api.unregister_status_notification_handler(status_cb)
+        local cp_status = require "copilot.status"
+        cp_status.unregister_status_notification_handler(status_cb)
         o.handler_registered = false
       elseif o.client == nil then
         local cp_client_ok, cp_client = pcall(require, "copilot.client")
